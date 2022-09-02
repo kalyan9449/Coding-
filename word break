@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool f(int i,int j,string& s, vector<string>& wordDict,vector<vector<int>>& dp) {
+        if (j==s.size()) return true;
+        if (i==wordDict.size()) return false;
+        if (dp[i][j]!=-1) return dp[i][j];
+        string k=wordDict[i];
+        bool take=false;
+        if (s.substr(j,k.size())==k) take=f(0,j+k.size(),s,wordDict,dp);
+        bool notTake=f(i+1,j,s,wordDict,dp);
+        return dp[i][j]=take||notTake;
+    }
+    bool wordBreak(string s, vector<string>& wordDict) {
+        vector<vector<int>> dp(wordDict.size(),vector<int>(s.size(),-1));
+        return f(0,0,s,wordDict,dp);
+    }
+};
